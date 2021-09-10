@@ -1,0 +1,12 @@
+    from practice.dezero.core import Function
+    from practice.dezero.core import using_config
+    from practice.dezero.core import no_grad
+    from practice.dezero.core import as_array
+    from practice.dezero.core import as_variable
+    from practice.dezero.core import setup_variable
+    from practice.dezero.core import add
+    from practice.dezero.core import mul
+    from practice.dezero.core import sub
+    from practice.dezero.core import rsub
+    from practice.dezero.core import div
+    from practice.dezero.core import pow
