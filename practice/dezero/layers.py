@@ -2,6 +2,7 @@ import weakref
 from practice.dezero import Parameter
 import numpy as np
 import practice.dezero.functions as F
+import practice.dezero.utils
 
 
 class Layer:
@@ -9,7 +10,7 @@ class Layer:
         self._params = set()
 
     def __setattr__(self, name, value):
-        if isinstance(value, Parameter):
+        if isinstance(value, (Parameter, Layer)):
             self._params.add(name)
         super().__setattr__(name, value)
 
@@ -26,9 +27,13 @@ class Layer:
 
     def params(self):
         for name in self._params:
-            yield self.__dict__[name]
+            obj = self.__dict__[name]
+            if isinstance(obj, Layer):
+                yield from obj.params()
+            else:
+                yield obj
 
-    def cleargrads(self):
+    def cleargrad(self):
         for param in self.params():
             param.cleargrad()
 
@@ -58,3 +63,9 @@ class Linear(Layer):
             self._init_W()
         y = F.linear(x, self.W, self.b)
         return y
+
+
+class Model(Layer):
+    def plot(self, *inputs, to_file="model.png"):
+        y = self.forward(*inputs)
+        return practice.dezero.utils.plot_dot_graph(y, verbose=True, to_file=to_file)

@@ -30,6 +30,8 @@ else:
     from practice.dezero.core import div
     from practice.dezero.core import pow
 
+    from practice.dezero.layers import Model
+    from practice.dezero.layers import Layer
 
     import practice.dezero.functions
     import practice.dezero.utils
